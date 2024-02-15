@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
     def compute_fft(data, NFFT, sample_period):
         # Subtract the mean from the data to help remove DC component
-        data_centered = data - np.mean(data)
+        data_centered = data #- np.mean(data)
         
         # Perform FFT on centered data
         fft_result = np.fft.fftshift(np.fft.fft(data_centered, NFFT))
@@ -88,8 +88,9 @@ if __name__ == "__main__":
         plt.title("FFT av ADC-data")
         plt.xlabel("Frekvens [Hz]")
         plt.ylabel("Forsterkning [dB]")
-        plt.xlim(0, 2200)
-        #plt.ylim(-100, 10)
+        
+        plt.xlim(-10, 1100)
+        #plt.ylim(-10, 10)
 
         return frequency_axis, fft_result_dB
 
@@ -131,7 +132,7 @@ if __name__ == "__main__":
         fft_non_hanning = 20*np.log10(np.abs(fft_non_hanning)) 
         fft_non_hanning = fft_non_hanning -np.max(fft_non_hanning) 
 
-        fft_windowed = 20*np.log10(fft_windowed_abs) 
+        #fft_windowed = 20*np.log10(fft_windowed_abs) 
         fft_windowed = fft_windowed -np.max(fft_windowed)
 
         frequency_axis = np.fft.fftshift(np.fft.fftfreq(NFFT, sample_period))
@@ -156,8 +157,8 @@ if __name__ == "__main__":
         plt.subplot(num_sensors, 1, sensor + 1)
 
         #channeldata(channel_data,NFFT,sensor)
-        #compute_fft(channel_data,NFFT,sample_period)
-        psd(channel_data,NFFT, sample_period)
+        compute_fft(channel_data,NFFT,sample_period)
+        #psd(channel_data,NFFT, sample_period)
         #hanning_window(channel_data,padded_NFFT,sample_period)
 
 plt.tight_layout()
